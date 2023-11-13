@@ -1,66 +1,48 @@
-// import logo from './logo.svg';
-import { Component } from 'react';
-import './App.css';
 
-class App extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      quotes: [
-        {
-          text: "The only way to do great work is to love what you do.",
-          author: "Steve Jobs",
-        },
-        {
-          text: "The best time to plant a tree was 20 years ago. The second best time is now.",
-          author: "Chinese Proverb",
-        },
-        {
-          text: "Life is what happens when you're busy making other plans.",
-          author: "John Lennon",
-        },
-      ],
-      currentQuoteIndex: 0,
-    };
-  }
 
-  getRandomQuote = () => {
-    const { quotes, currentQuoteIndex } = this.state;
-    const newIndex = Math.floor(Math.random()*quotes.length);
-    if(newIndex !== currentQuoteIndex) {
-      this.setState({
-        currentQuoteIndex :newIndex
-      })
-    } else {
-      this.getRandomQuote()
-    }
-  }
+import "./App.css";
+import Child from "./Child";
+import { Button, Input } from "antd";
+import React from 'react';
+class Life extends React.Component{
+  
+   state = {
+    count: 0,
+  };
+   handleAdd = () => {
+    this.setState({
+      count: this.state.count + 1,
+    });
+  };
+   handleClick = () => {
+    this.setState({
+      count: this.state.count - 1,
+    });
+  };
   render() {
-    const { quotes, currentQuoteIndex } = this.state;
-    const currentQuote = quotes[currentQuoteIndex];
+    let style = { padding: 50 };
     return (
-      <div id="quote-box">
-        <div id="text">
-          {currentQuote.text}
-        </div>
-        <div id="author">
-          - {currentQuote.author}
-        </div>
-        <button id="new-quote" onClick={this.getRandomQuote}>
-          New Quote
-        </button>
-        <a
-          id="tweet-quote"
-          href={`https://twitter.com/intent/tweet?text="${currentQuote.text}" - ${currentQuote.author}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Tweet Quote
-        </a>
+      <div className="content">
+        <p>React生命周期介绍</p>
+        <Input></Input>
+        <Button onClick={this.handleAdd} type="primary">
+          AntD点击一下
+        </Button>
+        <button onClick={this.handleAdd} style={style}>点击一下</button>
+        <button onClick={this.handleClick.bind(this)}>点击一下</button>
+        <p>{this.state.count}</p>
+        <Child name={this.state.count}></Child>
       </div>
     );
   }
-
+  
+}
+function App() {
+  return (
+    <div className="App">
+      <Life />
+    </div>
+  );
 }
 
 export default App;
