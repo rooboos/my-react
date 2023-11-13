@@ -17,6 +17,12 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.history/
+.vscode/
+123456
+123456.pub
+
+
 
 npm-debug.log*
 yarn-debug.log*

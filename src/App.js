@@ -1,25 +1,66 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
+import { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+class App extends Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      quotes: [
+        {
+          text: "The only way to do great work is to love what you do.",
+          author: "Steve Jobs",
+        },
+        {
+          text: "The best time to plant a tree was 20 years ago. The second best time is now.",
+          author: "Chinese Proverb",
+        },
+        {
+          text: "Life is what happens when you're busy making other plans.",
+          author: "John Lennon",
+        },
+      ],
+      currentQuoteIndex: 0,
+    };
+  }
+
+  getRandomQuote = () => {
+    const { quotes, currentQuoteIndex } = this.state;
+    const newIndex = Math.floor(Math.random()*quotes.length);
+    if(newIndex !== currentQuoteIndex) {
+      this.setState({
+        currentQuoteIndex :newIndex
+      })
+    } else {
+      this.getRandomQuote()
+    }
+  }
+  render() {
+    const { quotes, currentQuoteIndex } = this.state;
+    const currentQuote = quotes[currentQuoteIndex];
+    return (
+      <div id="quote-box">
+        <div id="text">
+          {currentQuote.text}
+        </div>
+        <div id="author">
+          - {currentQuote.author}
+        </div>
+        <button id="new-quote" onClick={this.getRandomQuote}>
+          New Quote
+        </button>
         <a
-          className="App-link"
-          href="https://reactjs.org"
+          id="tweet-quote"
+          href={`https://twitter.com/intent/tweet?text="${currentQuote.text}" - ${currentQuote.author}`}
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Tweet Quote
         </a>
-      </header>
-    </div>
-  );
+      </div>
+    );
+  }
+
 }
 
 export default App;
